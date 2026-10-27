@@ -1,5 +1,6 @@
 
 from cals import add, subtract, multiply, divide
+from cals import reverse_string
 import pytest
 
 
@@ -28,3 +29,13 @@ def test_divide():
     assert divide(0, 5) == 0
     with pytest.raises(ZeroDivisionError):
         divide(6, 0)
+
+
+@pytest.mark.parametrize("string, expected_result", [
+    ("hello", "olleh"),
+    ("world", "dlrow"),
+    ("12345", "54321"),
+    ("", ""),
+])
+def test_reverse_string(string, expected_result):
+    assert reverse_string(string) == expected_result

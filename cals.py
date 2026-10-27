@@ -11,3 +11,7 @@ def divide(x, y):
     if y == 0:
         raise ZeroDivisionError('Деление на ноль невозможно')
     return x / y
+
+
+def reverse_string(string):
+    return string[::-1]

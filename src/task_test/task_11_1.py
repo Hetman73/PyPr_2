@@ -75,8 +75,71 @@ print(filter_dic)
 
 
 
+"""Напишите генератор, который принимает на вход последовательность чисел
+и генерирует квадраты этих чисел."""
 
 
+def square_generator(nums):
+    for num in nums:
+        yield num ** 2
+
+
+
+"""Напишите генератор, который генерирует случайные числа в заданном диапазоне."""
+
+import random
+#from collections.abc import Generator
+
+def random_number_generator(a: int, b: int): #-> Generator[int, None, None]:
+    while True:
+        yield random.randint(a, b)
+
+
+if __name__ == "__main__":
+    gen_random = random_number_generator(1, 10)
+    print(next(gen_random))
+
+
+"""Напишите генератор, который генерирует последовательность чисел по заданной формуле."""
+
+def sequence_generator(start, formula):
+    num = start
+    while True:
+        yield num
+        num = formula(num)
+
+
+if __name__ == "__main__":
+    # Формула: каждое следующее число = предыдущее + 2
+    gen = sequence_generator(1, lambda x: x + 2)
+    for _ in range(10): # буквально повтори 10 раз.
+        print(next(gen))
+
+
+"""Напишите генератор, который принимает на вход два списка и генерирует элементы, 
+которые есть в обоих списках."""
+
+def duplicate_generator(a, b):
+    b_set = set(b)
+    for item in a:
+        if item in b_set:
+            yield item
+
+if __name__ == "__main__":
+
+    gen_dupl = duplicate_generator([1, 2, 3, 4, 5], [4, 5, 6, 7, 8])
+    for _ in range(5): # буквально повтори 5 раз, т.е. результат [4, 5] покажит 5  ряз
+        print(next(gen_dupl))
+
+
+## другой вариант решения без использования готового метода (set(a) & set(b))
+
+# def intersection_generator(lst1, lst2):
+#     seen = set()
+#     for item in lst1:
+#         if item in lst2 and item not in seen:
+#             seen.add(item)
+#             yield item
 
 
 

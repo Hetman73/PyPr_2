@@ -9,6 +9,7 @@ colorama==0.4.6
 crashtest==0.4.1
 distlib==0.4.3
 dulwich==1.2.15
+et_xmlfile==2.0.0
 fastjsonschema==2.22.2
 filelock==4.0.9
 findpython==0.8.0
@@ -24,7 +25,10 @@ jaraco.functools==4.6.0
 keyring==25.7.0
 more-itertools==11.1.0
 msgpack==1.2.3
+numpy==2.5.4
+openpyxl==3.1.5
 packaging==26.3
+pandas==3.1.0
 pbs-installer==2026.9.29
 pkginfo==1.13
 platformdirs==4.12.2
@@ -34,14 +38,17 @@ poetry-core==2.5.0
 Pygments==2.21.0
 pyproject_hooks==1.3.3
 pytest==9.1.1
+python-dateutil==3.0.0
 python-discovery==1.6.1
 pywin32-ctypes==0.2.3
 RapidFuzz==3.14.6
 requests==2.34.2
 requests-toolbelt==1.0.0
 shellingham==1.5.4
+six==1.17.0
 tomlkit==0.15.1
 trove-classifiers==2026.9.21.13
 typing_extensions==4.16.0
+tzdata==2026.6
 urllib3==2.8.0
 virtualenv==21.14.3

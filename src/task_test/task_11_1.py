@@ -106,13 +106,14 @@ def sequence_generator(start, formula):
     num = start
     while True:
         yield num
+
         num = formula(num)
 
 
 if __name__ == "__main__":
     # Формула: каждое следующее число = предыдущее + 2
     gen = sequence_generator(1, lambda x: x + 2)
-    for _ in range(10): # буквально повтори 10 раз.
+    for _ in range(3): # буквально повтори 3 раза.
         print(next(gen))
 
 
@@ -125,6 +126,7 @@ def duplicate_generator(a, b):
         if item in b_set:
             yield item
 
+
 if __name__ == "__main__":
 
     gen_dupl = duplicate_generator([1, 2, 3, 4, 5], [4, 5, 6, 7, 8])
@@ -132,7 +134,8 @@ if __name__ == "__main__":
         print(next(gen_dupl))
 
 
-## другой вариант решения без использования готового метода (set(a) & set(b))
+
+## другой вариант решения
 
 # def intersection_generator(lst1, lst2):
 #     seen = set()
@@ -143,3 +146,40 @@ if __name__ == "__main__":
 
 
 
+"""Напишите генератор, который принимает на вход размерность квадратной матрицы 
+и генерирует числа по спирали, начиная с центрального элемента."""
+
+
+def spiral_generator(n: int):
+    """Генерирует числа от 1 до n^2 по спирали, начиная с центра (0,0)."""
+    if n <= 0:
+        return
+
+    x, y = 0, 0  # Текущие координаты (x - столбец, y - строка)
+    dx, dy = 1, 0  # Начальное направление: вправо (x + 1)
+
+    yield 1  # Первое число в центре
+
+    # Генерируем остальные числа
+    for num in range(2, n * n + 1):
+        # Логика поворота спирали:
+        # Если мы сдвигаемся вправо, и следующий шаг выйдет за границу
+        # уже пройденного квадрата, или мы двигаемся вверх,
+        # то нужно повернуть налево.
+
+        # Проверяем, нужно ли поворачивать (при достижении угла)
+        if (dx == 1 and x == -y) or \
+                (dx == -1 and x == -y + 1) or \
+                (dy == 1 and x == -y + 1) or \
+                (dy == -1 and x == -y):
+            dx, dy = -dy, dx  # Поворот на 90 градусов по часовой стрелке
+
+        x += dx
+        y += dy
+        yield num
+
+
+if __name__ == "__main__":
+
+    gen = spiral_generator(3)
+    print(next(gen))

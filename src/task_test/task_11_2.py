@@ -1,3 +1,7 @@
+from email.mime import text
+from unittest import result
+
+
 def integers(func):
     """Декоратор, который проверяет, что все числа, возвращаемые декорируемой функцией,
     являются целыми, и округляет их до целых, если это не так."""
@@ -105,13 +109,40 @@ print(next(p))  # Выведет: 1
 print(next(p))  # Выведет: 2
 print(next(p))  # Выведет: 3
 
-def truncate_words(func):
- """Декоратор, который берет результат декорируемой функции (текст) и возвращает текст,
- в котором каждое слово сокращено до 8 символов. Если слово было сокращено, в конце слова
- ставится точка."""
-    def wrapper(words):
-        for word in words:
-            if len(word) <= 8:
-                truncate_word = word[:8]
-                return words
-        else:
+
+
+
+from functools import wraps
+
+
+def truncate_words(length=8, sign="…"):
+    """Декоратор: сокращает слова длиннее `length` символов,
+    добавляя в конец сокращённого слова `sign`."""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            text = func(*args, **kwargs)
+            if not isinstance(text, str):
+                return text                  # не строка — не трогаем
+            result = []
+            for word in text.split():
+                if len(word) > length:
+                    result.append(word[:length] + sign)
+                else:
+                    result.append(word)
+            return " ".join(result)
+        return wrapper
+    return decorator
+
+
+@truncate_words(length=8, sign=".")
+def get_text():
+    return ("Напишите декоратор, который берет результат декорируемой функции "
+            "(текст) и возвращает текст, в котором каждое слово сокращено до "
+            "определенной длины. Если слово было сокращено, в конце слова ставится "
+            "переданный символ. Количество символов в слове и знак в конце сокращенного "
+            "слова — параметры декоратора, причем символ обязательно должен передаваться "
+            "как именованный аргумент.")
+
+
+print(get_text())

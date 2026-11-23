@@ -8,7 +8,7 @@ log.txt
 
 INFO:root:Request time: 2022-10-22 14:30:05
 INFO:root:Request time: 2022-10-22 14:45:12 """
-
+import json
 import logging
 import requests
 from datetime import datetime
@@ -30,9 +30,14 @@ def get_list_user_api() -> list:
 
         # 2. Отправляем GET-запрос
         response = requests.get(BASE_URL_JP, timeout=30)
+
         print("Статус-код от сервера:", response.status_code) # <--- ВЫВОДИТ 200
         response.raise_for_status() # <--- проверяет 200, Если 400+, он бросает исключение, и код перескакивает в блок except.
         data = response.json()
+        # результаты записываем в файл user.json
+        with open('users.json', 'w', encoding='utf-8') as file:
+            json.dump(data, file, ensure_ascii=False, indent=4)
+        print("Данные успешно записаны в users.json")
 
         # 3. Извлекаем username
         users = [user.get("username") for user in data if "username" in user]
